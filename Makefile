@@ -1,7 +1,16 @@
+CC = gcc
+CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall -Wextra -Werror -c
+LD = ld
+LDFLAGS = -melf_i386
+AS = as
+ASFLAGS = --32
+
+
 build:
 	mkdir -p build
-	nasm -f elf32 src/loader.s -o build/loader.o
-	ld -T src/link.ld -melf_i386 build/loader.o -o build/kernel.elf
+	$(CC) $(CFLAGS)  src/kmain.c  -o build/kmain.o
+	$(AS) $(ASFLAGS) src/loader.s -o build/loader.o
+	$(LD) -T src/link.ld $(LDFLAGS) build/loader.o build/kmain.o -o build/kernel.elf
 
 
 image: build
