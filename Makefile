@@ -9,11 +9,10 @@ ASFLAGS = --32
 build:
 	mkdir -p build
 	$(CC) $(CFLAGS)  src/kmain.c                    -o build/kmain.o
-	$(CC) $(CFLAGS)  src/framebuffer/framebuffer.c  -o build/framebuffer.o
-	$(CC) $(CFLAGS)  src/io/io.c                    -o build/io.o
+	$(CC) $(CFLAGS)  src/framebuffer/write.c        -o build/write.o
 	$(AS) $(ASFLAGS) src/loader.s                   -o build/loader.o
-	$(AS) $(ASFLAGS) src/io/io.s                    -o build/io_asm.o
-	$(LD) -T src/link.ld $(LDFLAGS) build/loader.o build/framebuffer.o build/io_asm.o build/io.o build/kmain.o -o build/kernel.elf
+	$(AS) $(ASFLAGS) src/framebuffer/io.s           -o build/io.o
+	$(LD) -T src/link.ld $(LDFLAGS) build/loader.o build/write.o build/io.o build/kmain.o -o build/kernel.elf
 
 
 image: build
