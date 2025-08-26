@@ -1,9 +1,8 @@
 #include "framebuffer.h"
-#include "io.h"
 
 static unsigned fb_pos = 0;
 
-int write(char *buf, unsigned int len) {
+int fb_write(char *buf, unsigned int len) {
     for(unsigned int i = 0; i < len; i++) {
         fb_write_cell(fb_pos, buf[i], RED, BLUE);
         fb_pos += 2;
