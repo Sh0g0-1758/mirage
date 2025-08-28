@@ -19,6 +19,8 @@ kernel_stack:
 loader:
     movl $0xCAFEBABE, %eax                       # place 0xCAFEBABE into %eax
     movl $kernel_stack + KERNEL_STACK_SIZE, %esp # set esp to the base of stack
+    .extern load_gdt
+    call load_gdt
     .extern kmain
     call kmain
 loop:
